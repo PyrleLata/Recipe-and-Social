@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read (One)</title>
+</head>
+<body>
+    <h1>Recipe {{ recipe.id }}</h1>
+    <h2>Name: {{ recipe.recipe_name }}</h2>
+    <h2>Ingredients: {{ recipe.ingredients }}</h2>
+    <h2>Prep/Cooking Time: {{ recipe.duration }} hours</h2>
+    <h2>Description: {{ recipe.desc }}</h2>
+    <h2>Cooking Instructions: <hr>{{ recipe.cooking_instruction }}</h2>
+    <h2>Last Updated: {{ recipe.updated_at }}</h2>
+    {% if request.session.user_id == recipe.user.id %}
+    <a href="/recipes">Go Back | </a>
+    <a href="/recipes/{{ recipe.id }}/edit">Edit | </a>
+    <a href="/recipes/{{ recipe.id }}/destroy">Delete</a>
+    {% else %}
+    <a href="/recipes/wall">Go Home | </a>
+    {% endif %} 
+ 
+</body>
+</html>

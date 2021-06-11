@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Recipes</title>
+</head>
+<body>
+    <h1>Welcome {{ user.first_name }}!</h1>
+    <ul><a href="/logout">log off</a></ul>
+    <ul><a href="/recipes/wall">wall</a></ul>
+    <h2>My Recipes</h2>
+    <p>Do you have meal or recipe ideas? Or do you love to craft new recipe out from available ingredients in your pantry?You can absolutely list them here annd never forget!</p>
+    <form action ="#addRecipe">
+        {% csrf_token %}
+    <button>Add a new Recipe</button><br><br>
+    </form>
+    <table style="width:100%">
+        <tr>
+            
+            <th>Name</th>
+            <th>Ingredients</th>
+            <th>Prep/Cooking Time</th>
+            <th>Actions</th>
+        </tr>
+        {% for recipe in recipes %}
+            {% if request.session.user_id == recipe.user.id %} 
+        <tr>
+            
+            <td>{{ recipe.recipe_name }}</td>
+            <td>{{ recipe.ingredients }}</td>
+            <td>{{ recipe.duration }}</td>
+            <td><a href="/recipes/{{ recipe.id }}">View | </a>
+                <a href="/recipes/{{ recipe.id }}/edit">Edit | </a>
+                <a href="/recipes/{{ recipe.id }}/destroy">Delete</a></td>
+        </tr>
+        {% endif %} {% endfor %} 
+    </table><br><br>
+    <hr>
+    <h1 id = "addRecipe"> Add a New Recipe </h1>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="/add-recipe" method="post">
+        {% csrf_token %}
+        <h3>Name of Your Recipe &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; Duration (hour/s)</h3><br>
+        <input type="text" name="recipe_name" /> &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; 
+        <input type="number" name="duration"/><br><br>
+        <h3>Ingredients </h3><br>
+        <textarea name="ingredients" cols="30" rows="5"></textarea>
+        
+        <h3>Description: </h3><br><textarea name="desc" cols="30" rows="5">optional</textarea>
+        <h3>Cooking Instruction: </h3><br><textarea name="steps" cols="30" rows="5"></textarea>
+        <br>
+        <button>Add to my Recipe List</button>
+    </form>
+</body>
+</html>

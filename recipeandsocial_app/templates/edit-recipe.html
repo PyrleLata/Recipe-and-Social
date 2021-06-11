@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Recipe</title>
+  </head>
+  <body>
+    <h1>Edit Recipe</h1>
+    {% if messages %} {% for msg in messages %}
+    <h3>{{ msg }}</h3>
+    {% endfor %} {% endif %}
+    <form action="/recipes/{{ recipe.id }}/update" method="post">
+        {% csrf_token %}
+        <h3>Name of Your Recipe &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; Duration (hour/s)</h3><br>
+        <input type="text" name="recipe_name" value="{{ recipe.recipe_name }}" /> &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; 
+        <input type="number" name="duration" value="{{ recipe.duration }}"/><br><br>
+        <h3>Ingredients </h3><br>
+        <textarea name="ingredients" cols="100" rows="5">{{ recipe.ingredients }}</textarea>
+        
+        <h3>Description: </h3><br><textarea name="desc" cols="100" rows="5">{{ recipe.desc }}</textarea>
+        <h3>Cooking Instruction: </h3><br><textarea name="steps" cols="100" rows="5"> {{ recipe.cooking_instruction }}</textarea>
+        <br>
+        <button>Update my Recipe</button>
+        <button><a href="/recipes">Go Back | </a></button>
+    </form>
+  </body>
+</html>

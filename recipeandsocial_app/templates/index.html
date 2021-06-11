@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipe & Social Log In</title>
+</head>
+<body>
+    <h3>Welcome to</h3>
+    <h1> Recipe & Social</h1>
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  
+    {% endif %}
+    <br>
+    <form action="/login" method="post">
+        {% csrf_token %} Email: &emsp13; &emsp13; &emsp13;<input type="text" name="email" /><br><br>
+        Password: <input type="password" name="password" /><br><br>
+        &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;<button>Log In</button>
+    </form>
+    <p>Don't have an account? <a href = "/signup">Sign Up</a></p>
+</body>
+</html>

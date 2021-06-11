@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>My Recipe Wall</title>
+</head>
+<body>
+    <h1>Welcome {{ user.first_name }} to Your Recipe Wall!</h1>
+    <ul><a href="/logout">log off</a></ul>
+    <ul><a href="/recipes">home</a></ul>
+    <h3>Recipes</h3>
+    {% for recipe in recipes %}
+    
+    <div class="container-fluid">
+        <h4>Recipe name:{{ recipe.recipe_name }} for {{ recipe.duration }} hour/s only.<br><a href="/recipes/{{ recipe.id }}">Info</a>  </h4>
+            <p action=>{{ recipe.user.first_name }} {{ recipe.user.last_name }} added this recipe.</p>
+        <span><a href="/add-like/{{ recipe.id }}">LIKE</a></span>
+        <span>{{ recipe.likes.count }}</span>
+         {% if request.session.user_id == recipe.user.id %}
+        <span><a href="/recipes/{{ recipe.id }}/edit">Edit | </a></span>
+        <span><a href="/recipes/{{ recipe.id }}/destroy">Delete</a></span>
+        {% endif %}  
+    
+        {% for comment in recipe.comments.all %}
+        <div class="container-fluid">
+          <h6>{{ comment.user.first_name }} {{ comment.user.last_name }} - {{ comment.created_at }}</h6>
+          <p>
+            {{comment.text}}
+          </p>
+            {% if request.session.user_id == comment.user.id %}
+          <span><a href="/delete-comment/{{ comment.id }}">DELETE</a></span>
+           {% endif %} 
+        </div>
+        {% endfor %}
+        <div class="container-fluid">
+          <h6>Post a comment</h6>
+          <form action="/add-comment" method="post">
+            {% csrf_token %}
+            <textarea name="comment_text" id="" cols="80" rows="2"></textarea>
+            <input type="hidden" name="recipe_id" value="{{ recipe.id }}" />
+            <button class="btn btn-success">Post a comment</button>
+          </form>
+        </div>
+    </div>
+    {% endfor %}
+</body>
+</html>
