@@ -9,23 +9,51 @@
     <title>Edit Recipe</title>
   </head>
   <body>
-    <h1>Edit Recipe</h1>
-    {% if messages %} {% for msg in messages %}
-    <h3>{{ msg }}</h3>
-    {% endfor %} {% endif %}
-    <form action="/recipes/{{ recipe.id }}/update" method="post">
-        {% csrf_token %}
-        <h3>Name of Your Recipe &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; Duration (hour/s)</h3><br>
-        <input type="text" name="recipe_name" value="{{ recipe.recipe_name }}" /> &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; 
-        <input type="number" name="duration" value="{{ recipe.duration }}"/><br><br>
-        <h3>Ingredients </h3><br>
-        <textarea name="ingredients" cols="100" rows="5">{{ recipe.ingredients }}</textarea>
+    <div class="container mx-auto">
+      <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
+        <div class="col-sm-4 col-md-4">
+            <!-- Brand -->
+            <a class="navbar-brand" href="/recipes">Recipe&Social</a>
         
-        <h3>Description: </h3><br><textarea name="desc" cols="100" rows="5">{{ recipe.desc }}</textarea>
-        <h3>Cooking Instruction: </h3><br><textarea name="steps" cols="100" rows="5"> {{ recipe.cooking_instruction }}</textarea>
-        <br>
-        <button>Update my Recipe</button>
-        <button><a href="/recipes">Go Back | </a></button>
-    </form>
+            <!-- Links -->
+        </div>
+        <div class="col">
+            <ul class="navbar-nav float-sm-right">
+              
+              <li class="nav-item">
+                  <a class="nav-link" href="/recipes/wall">Wall</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/logout">Log Off</a>
+              </li>
+            
+            </ul>
+        </div>
+      </nav>
+    
+      <h3>Edit Recipe</h3>
+      {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li class="text-danger">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+      <form action="/recipes/{{ recipe.id }}/update" method="post">
+          {% csrf_token %}
+          <p>Name of Your Recipe &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; Duration (hour/s)</p>
+          <input type="text" name="recipe_name" value="{{ recipe.recipe_name }}" /> &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; 
+          <input type="number" name="duration" value="{{ recipe.duration }}"/><br><br>
+          <p>Ingredients </p>
+          <textarea name="ingredients" cols="100" rows="5">{{ recipe.ingredients }}</textarea><br><br>
+          
+          <p>Description: </p><textarea name="desc" cols="100" rows="5">{{ recipe.desc }}</textarea><br><br>
+          <p>Cooking Instruction: </p><textarea name="steps" cols="100" rows="5"> {{ recipe.cooking_instruction }}</textarea>
+          <br>
+          <button>Update my Recipe</button>
+          <button><a href="/recipes">Go Back | </a></button>
+      </form>
+      <div class="container-fluid text-center text-light m-2" style= "background-color:rgb(195 195 195);">You have reached the end of this page</div>
+    </div>
   </body>
 </html>

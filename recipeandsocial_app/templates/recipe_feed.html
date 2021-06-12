@@ -9,18 +9,38 @@
     <title>My Recipe Wall</title>
 </head>
 <body>
-    <h1>Welcome {{ user.first_name }} to Your Recipe Wall!</h1>
-    <ul><a href="/logout">log off</a></ul>
-    <ul><a href="/recipes">home</a></ul>
+  <div class="container mx-auto">
+    <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
+      <div class="col-sm-4 col-md-4">
+          <!-- Brand -->
+          <a class="navbar-brand" href="/recipes">Recipe&Social</a>
+      
+          <!-- Links -->
+      </div>
+      <div class="col">
+          <ul class="navbar-nav float-sm-right">
+            <li class="nav-item">
+              <a class="nav-link" href="#"> Welcome {{ user.first_name }}!</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/recipes/wall">Wall</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Log Off</a>
+            </li>
+          
+          </ul>
+      </div>
+    </nav>
     <h3>Recipes</h3>
     {% for recipe in recipes %}
     
     <div class="container-fluid">
-        <h4>Recipe name:{{ recipe.recipe_name }} for {{ recipe.duration }} hour/s only.<br><a href="/recipes/{{ recipe.id }}">Info</a>  </h4>
+        <h6>Recipe name:{{ recipe.recipe_name }} for {{ recipe.duration }} hour/s only.<br><a href="/recipes/{{ recipe.id }}">Info</a>  </h6>
             <p action=>{{ recipe.user.first_name }} {{ recipe.user.last_name }} added this recipe.</p>
         <span><a href="/add-like/{{ recipe.id }}">LIKE</a></span>
         <span>{{ recipe.likes.count }}</span>
-         {% if request.session.user_id == recipe.user.id %}
+        {% if request.session.user_id == recipe.user.id %}
         <span><a href="/recipes/{{ recipe.id }}/edit">Edit | </a></span>
         <span><a href="/recipes/{{ recipe.id }}/destroy">Delete</a></span>
         {% endif %}  
@@ -33,7 +53,7 @@
           </p>
             {% if request.session.user_id == comment.user.id %}
           <span><a href="/delete-comment/{{ comment.id }}">DELETE</a></span>
-           {% endif %} 
+          {% endif %} 
         </div>
         {% endfor %}
         <div class="container-fluid">
@@ -47,5 +67,7 @@
         </div>
     </div>
     {% endfor %}
+    <div class="container-fluid text-center text-light m-2" style= "background-color:rgb(195 195 195);">You have reached the end of this page</div>
+  </div>
 </body>
 </html>

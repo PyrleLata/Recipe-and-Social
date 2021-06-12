@@ -7,59 +7,87 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>My Recipes</title>
+    
 </head>
 <body>
-    <h1>Welcome {{ user.first_name }}!</h1>
-    <ul><a href="/logout">log off</a></ul>
-    <ul><a href="/recipes/wall">wall</a></ul>
-    <h2>My Recipes</h2>
-    <p>Do you have meal or recipe ideas? Or do you love to craft new recipe out from available ingredients in your pantry?You can absolutely list them here annd never forget!</p>
-    <form action ="#addRecipe">
-        {% csrf_token %}
-    <button>Add a new Recipe</button><br><br>
-    </form>
-    <table style="width:100%">
-        <tr>
+    <div class="container mx-auto">
+        <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
+            <div class="col-sm-4 col-md-4">
+                <!-- Brand -->
+                <a class="navbar-brand" href="/recipes">Recipe&Social</a>
             
-            <th>Name</th>
-            <th>Ingredients</th>
-            <th>Prep/Cooking Time</th>
-            <th>Actions</th>
-        </tr>
-        {% for recipe in recipes %}
-            {% if request.session.user_id == recipe.user.id %} 
-        <tr>
+                <!-- Links -->
+            </div>
+            <div class="col">
+                <ul class="navbar-nav float-sm-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"> Welcome {{ user.first_name }}!</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/recipes/wall">Wall</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log Off</a>
+                    </li>
+                
+                </ul>
+            </div>
+        </nav>
+
+        <h2>My Recipes</h2>
+        <p>Do you have meal or recipe ideas? Or do you love to craft new recipe out from available ingredients in your pantry?You can absolutely list them here annd never forget!</p>
+        <form action ="#addRecipe">
+            {% csrf_token %}
+        <button>Add a new Recipe</button><br><br>
+        </form>
+        <table class = "table">
+            <thead class="thead-light">
+                <tr>
+                    
+                    <th>Name</th>
+                    <th>Ingredients</th>
+                    <th>Duration(hr/s)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for recipe in recipes %}
+                    {% if request.session.user_id == recipe.user.id %} 
+                <tr>
             
-            <td>{{ recipe.recipe_name }}</td>
-            <td>{{ recipe.ingredients }}</td>
-            <td>{{ recipe.duration }}</td>
-            <td><a href="/recipes/{{ recipe.id }}">View | </a>
-                <a href="/recipes/{{ recipe.id }}/edit">Edit | </a>
-                <a href="/recipes/{{ recipe.id }}/destroy">Delete</a></td>
-        </tr>
-        {% endif %} {% endfor %} 
-    </table><br><br>
-    <hr>
-    <h1 id = "addRecipe"> Add a New Recipe </h1>
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <form action="/add-recipe" method="post">
-        {% csrf_token %}
-        <h3>Name of Your Recipe &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; Duration (hour/s)</h3><br>
-        <input type="text" name="recipe_name" /> &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; 
-        <input type="number" name="duration"/><br><br>
-        <h3>Ingredients </h3><br>
-        <textarea name="ingredients" cols="30" rows="5"></textarea>
-        
-        <h3>Description: </h3><br><textarea name="desc" cols="30" rows="5">optional</textarea>
-        <h3>Cooking Instruction: </h3><br><textarea name="steps" cols="30" rows="5"></textarea>
-        <br>
-        <button>Add to my Recipe List</button>
-    </form>
+                    <td><strong>{{ recipe.recipe_name }}</strong><br></td>
+                    <td>{{ recipe.ingredients }}</td>
+                    <td>{{ recipe.duration }}</td>
+                    <td><a href="/recipes/{{ recipe.id }}">View  </a>
+                        <a href="/recipes/{{ recipe.id }}/edit">Edit </a>
+                        <a href="/recipes/{{ recipe.id }}/destroy">Delete</a></td>
+                </tr>
+                {% endif %} {% endfor %} 
+            </tbody>
+        </table><br><br>
+        <hr>
+        <h3 id = "addRecipe"> Add a New Recipe </h3>
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li class="text-danger">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form action="/add-recipe" method="post">
+            {% csrf_token %}
+            <p>Name of Your Recipe &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; Duration (hour/s)</p>
+            <input type="text" name="recipe_name" /> &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; &emsp13; 
+            <input type="number" name="duration"/><br><br>
+            <p>Ingredients </p>
+            <textarea name="ingredients" cols="30" rows="5"></textarea><br><br>
+            
+            <p>Description: </p><textarea name="desc" cols="30" rows="5">optional</textarea><br><br>
+            <p>Cooking Instruction: </p><textarea name="steps" cols="30" rows="5"></textarea><br><br>
+            <br>
+            <button>Add to my Recipe List</button>
+        </form>
+        <div class="container-fluid text-center text-light m-2" style= "background-color:rgb(195 195 195);">You have reached the end of this page</div>
+    </div>
 </body>
 </html>

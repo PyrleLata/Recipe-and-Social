@@ -4,27 +4,50 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Recipe & Social Log In</title>
 </head>
 <body>
-    <h3>Welcome to</h3>
-    <h1> Recipe & Social</h1>
-    {% if messages %}
-    <ul>
-      {% for message in messages %}
-      <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
-  
-    {% endif %}
-    <br>
-    <form action="/login" method="post">
-        {% csrf_token %} Email: &emsp13; &emsp13; &emsp13;<input type="text" name="email" /><br><br>
-        Password: <input type="password" name="password" /><br><br>
-        &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;<button>Log In</button>
-    </form>
-    <p>Don't have an account? <a href = "/signup">Sign Up</a></p>
+  <div class="jumbotron text-center">
+    <p>Welcome to</p>
+    <h1>Recipe & Social</h1>
+  </div>
+  <div class="container mx-auto">
+    <div class="row mx-auto">
+      <div class="col-sm-3 col-md-4 justify-items"> 
+        <img src="{% static 'img/index_bg.jpg' %}" alt="food" style="width:650px; height: 425px;"/>
+      </div>
+      <div class="col-sm-3 col-md-4 m-5 pt-5"> 
+      
+        <form action="/login" method="post">
+          {% csrf_token %} <strong>Email:</strong><br><input type="text" name="email" /><br><br>
+          <strong>Password:</strong> <br><input type="password" name="password" /><br><br>
+          &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;<button class="btn btn-primary" >Log In</button>  
+        </form>
+        <br>
+        <div class="row-sm-3 mx-auto">
+        
+          <p>Don't have an account? <a href = "/signup">Sign Up</a></p>
+            
+        </div>
+        <div class="row mx-auto">
+          {% if messages %}
+          
+          <p class="text-danger">
+            {% for message in messages %}
+    
+            {{ message }}
+    
+            {% endfor %}
+          </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+  </div>
+    
 </body>
 </html>
